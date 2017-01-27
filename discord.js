@@ -51,14 +51,15 @@ client.on('message', message => {
         default:
             if (command.startsWith('.avatar')) {
                 userLog(nick, 'command AVATAR');
-                let args = message.content.split(" ", 2);
-                let cmd = args[0];
-                let ment = args[1];
-                if (ment === undefined) {
+                let users = message.mentions.users;
+                if (users.first()) {
+                    let result = '';
+                    users.forEach(function (user) {
+                        result += user.avatarURL + '\n';
+                    });
+                    message.reply(result);
+                } else {
                     message.reply(message.author.avatarURL);
-                }
-                else {
-                    message.reply(ment.avatarURL);
                 }
             }
     }
