@@ -1,12 +1,12 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const discord = require('discord.js');
+const client = new discord.Client();
 
 function botLog(msg) {
     console.log(`Bot: ${msg}`)
 }
 
-function userLog(nick, msg) {
-    console.log(`User ${nick}: ${msg}`);
+function userLog(server, nick, msg) {
+    console.log(`[${server}] User ${nick}: ${msg}`);
 }
 
 client.on('ready', () => {
@@ -18,39 +18,43 @@ client.on('ready', () => {
 client.on('message', message => {
 	if(message.author.bot) return;
 
+    let content = message.content;
     let command = message.content.toLowerCase();
     let nick = message.author.username;
     let channel = message.channel;
+    let server = message.guild.name;
+    
     switch (command) {
         case '.ping':
-            userLog(nick, 'command PING');
+            userLog(server, nick, 'command PING');
             message.reply('pong!');
             break;
         case '.pong':
-            userLog(nick, 'command PONG');
+            userLog(server, nick, 'command PONG');
             message.reply('ping!');
             break;
         case 'hi kuvu!':
-            userLog(nick, 'command HI_KUVU');
+            userLog(server, nick, 'command HI_KUVU');
             channel.sendMessage('Hi ' + message.author.username + '!');
             break;
         case '#reklama':
-            userLog(nick, 'command REKLAMA');
+            userLog(server, nick, 'command REKLAMA');
             message.delete();
             channel.sendMessage('Zapraszam do zapoznania się z innymi projektami mojego stwórcy!\nStrona www: https://kuvus.pl');
             break;
         case '.pomoc':
         case '.help':
-            userLog(nick, 'command HELP');
+            userLog(server, nick, 'command HELP');
             message.author.sendMessage('Oto lista komend:\n```.pomoc - wyświetla pomoc\n.ping - wysyła wiadomość o treści ping\n.avatar - wysyła adres URL do twojego avatara\n.servers - Lista serwerów używających kuvuBota```');
             message.reply('lista komend została wysłana na PW!');
             break;
         case '.servers':
-            userLog(nick, 'command SERVERS');
+            userLog(server, nick, 'command SERVERS');
             message.reply('serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name + ' (#' + r.id + ')') + '```');
+            break;
         default:
             if (command.startsWith('.avatar')) {
-                userLog(nick, 'command AVATAR');
+                userLog(server, nick, 'command AVATAR');
                 let users = message.mentions.users;
                 if (users.first()) {
                     let result = '';
