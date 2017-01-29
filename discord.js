@@ -37,8 +37,6 @@ client.on('message', message => {
     let channel = message.channel;
     let server = message.guild.name;
     
-    userLog(server, nick, content);
-    
     switch (command) {
         case '.ping':
             userLog(server, nick, 'command PING');
@@ -93,6 +91,25 @@ client.on('message', message => {
                     }
                 }
                 channel.sendMessage(reply);
+            } else if (command.startsWith('.rawtext')) {
+                userLog(server, nick, 'command RAWTEXT');
+                
+                let reply = '```';
+                let splitted = command.split(' ');
+                if (splitted.length == 1) {
+                    message.reply('użycie: .rawtext <tekst>');
+                } else {
+                    for (let i = 1; i < splitted.length; i++) {
+                        splitted[i].split('').forEach(function (c) {
+                            if (c.search(/a-z/)) {
+                                reply += `:regional_indicator_${c}: `;
+                            }
+                        });
+                        reply += '   ';
+                    }
+                    reply += '```';
+                    message.reply(reply);
+                }
             } else if (command.startsWith('.react')) {
                 userLog(server, nick, 'command REACT');
                 
