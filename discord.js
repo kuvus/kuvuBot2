@@ -9,6 +9,19 @@ function userLog(server, nick, msg) {
     console.log(`[${server}] User ${nick}: ${msg}`);
 }
 
+function stringToEmojis(string) {
+    let result = [];
+    string.split('').forEach(function (c) {
+        if (c.search(/a-z/)) {
+            let aCode = 97; //https://unicode-table.com/en/0061/
+            let regionalIndicatorACode = 127462; //https://unicode-table.com/en/1F1E6/
+            let emojiCode = regionalIndicatorACode + c.charCodeAt(0) - aCode;
+            result.push(String.fromCodePoint(emojiCode));
+        }
+    });
+    return result;
+}
+
 client.on('ready', () => {
 	botLog('Ready!');
 	client.user.setGame('służę pomocą!');
@@ -23,6 +36,8 @@ client.on('message', message => {
     let nick = message.author.username;
     let channel = message.channel;
     let server = message.guild.name;
+    
+    userLog(server, nick, content);
     
     switch (command) {
         case '.ping':
@@ -65,6 +80,38 @@ client.on('message', message => {
                 } else {
                     message.reply(message.author.avatarURL);
                 }
+            } else if (command.startsWith('.text')) {
+                userLog(server, nick, 'command TEXT');
+                
+                let reply = '';
+                let splitted = command.split(' ');
+                if (splitted.length == 1) {
+                    message.reply('użycie: .text <tekst>');
+                } else {
+                    for (let i = 1; i < splitted.length; i++) {
+                        reply += stringToEmojis(splitted[i]).join(' ') + '   ';
+                    }
+                }
+                channel.sendMessage(reply);
+            } else if (command.startsWith('.react')) {
+                userLog(server, nick, 'command REACT');
+                
+                let splitted = command.split(' ');
+                let emojis = [];
+                if (splitted.length == 1) {
+                    message.reply('użycie: .react <tekst>');
+                } else {
+                    for (let i = 1; i < splitted.length; i++) {
+                        emojis = emojis.concat(stringToEmojis(splitted[i]));
+                    }
+                }
+                
+                let react = function(i) {
+                    if (i < emojis.length) {
+                        message.react(emojis[i]).then(function() { react(i + 1); });
+                    }
+                }
+                react(0);
             }
     }
 });
