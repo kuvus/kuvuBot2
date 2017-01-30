@@ -8,6 +8,6 @@ Once you have node installed running npm install from the bot directory should i
 ### Running Guide:
 `node discord.js`
 
-### Creating Bot Accound Guide:
+### Creating Discord Bot Account Guide:
 
 ![guide](https://kuvus.pl/bot/bot-account-1.png)
