@@ -47,6 +47,7 @@ client.on('message', message => {
             message.reply('ping!');
             break;
         case 'hi kuvu!':
+	case 'cześć kuvu!':
             userLog(server, nick, 'command HI_KUVU');
             channel.sendMessage('Hi ' + message.author.username + '!');
             break;
@@ -62,6 +63,7 @@ client.on('message', message => {
             message.reply('lista komend została wysłana na PW!');
             break;
         case '.servers':
+	case '.serwery':
             userLog(server, nick, 'command SERVERS');
             message.reply('serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name + ' (#' + r.id + ')') + '```');
             break;
