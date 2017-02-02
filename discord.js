@@ -65,7 +65,8 @@ client.on('message', message => {
         case '.servers':
 	case '.serwery':
             userLog(server, nick, 'command SERVERS');
-            message.reply('serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name + ' (#' + r.id + ')') + '```');
+	    let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "") + ' (#' + r.id + ')') + '```';
+            message.reply(serversMessage);
             break;
         default:
             if (command.startsWith('.avatar')) {
