@@ -63,9 +63,9 @@ client.on('message', message => {
             message.reply('lista komend została wysłana na PW!');
             break;
         case '.servers':
-	case '.serwery':
+		case '.serwery':
             userLog(server, nick, 'command SERVERS');
-	    let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "") + ' (#' + r.id + ')') + '```';
+			let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "").replace(/^\s*/g, "") + ' (#' + r.id + ')') + '```';
             message.reply(serversMessage);
             break;
         default:
