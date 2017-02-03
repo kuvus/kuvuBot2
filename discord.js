@@ -53,7 +53,8 @@ client.on('message', message => {
             message.reply('ping!');
             break;
         case 'hi kuvu!':
-	case 'cześć kuvu!':
+		case 'cześć kuvu!':
+		case '.hi':
             userLog(server, nick, 'command HI_KUVU');
             channel.sendMessage('Hi ' + message.author.username + '!');
             break;
