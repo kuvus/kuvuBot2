@@ -24,7 +24,7 @@ function stringToEmojis(string) {
 
 client.on('ready', () => {
 	botLog('Ready!');
-	client.user.setGame('służę pomocą!');
+	client.user.setGame('bot.kuvus.pl');
 	client.user.setAvatar('./avatar3.png');
 });
 
