@@ -1,7 +1,7 @@
 # kuvuBot
 
 ### Informations
-Official Discord server: https://discord.gg/J9ubTth
+Official Discord server: https://discord.gg/J9ubTth \n
 Add kuvuBot to your server: http://bit.ly/kuvuBot
 
 ### Installation Guide:
