@@ -35,7 +35,13 @@ client.on('message', message => {
     let command = message.content.toLowerCase();
     let nick = message.author.username;
     let channel = message.channel;
-    let server = message.guild.name;
+	var server;
+	if (channel.type == "text") {
+        server = message.guild.name;
+	}
+	else {
+		server = "Private Message";
+	}
     
     switch (command) {
         case '.ping':
