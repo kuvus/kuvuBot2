@@ -66,7 +66,7 @@ client.on('message', message => {
         case '.pomoc':
         case '.help':
             userLog(server, nick, 'command HELP');
-            message.author.sendMessage('Oto lista komend:\n```.pomoc - wyświetla pomoc\n.ping - wysyła wiadomość o treści ping\n.avatar - wysyła adres URL do twojego avatara\n.servers - Lista serwerów używających kuvuBota```');
+            message.author.sendMessage('Oto lista komend:\n```.pomoc - wyświetla pomoc\n.ping - wysyła wiadomość o treści ping\n.avatar - wysyła adres URL do twojego avatara\n.avatar @nick - wysyła URL do avatara oznaczonej osoby\n.serwery (.servers) - Lista serwerów używających kuvuBota\n.text <tekst> - przekształca tekst na emoji\n```');
             message.reply('lista komend została wysłana na PW!');
             break;
         case '.servers':
