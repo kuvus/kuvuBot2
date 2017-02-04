@@ -84,11 +84,13 @@ client.on('message', message => {
                 if (users.first()) {
                     let result = '';
                     users.forEach(function (user) {
-                        result += user.avatarURL + '\n';
+                        let avatar = user.avatarURL;
+                        result += (avatar == null ? '<brak awatara>' : avatar) + '\n';
                     });
                     message.reply(result);
                 } else {
-                    message.reply(message.author.avatarURL);
+                    let avatar = message.author.avatarURL;
+                    message.reply(avatar == null ? 'nie ustawiłeś jeszcze awatara!' : avatar);
                 }
             } else if (command.startsWith('.text')) {
                 userLog(server, nick, 'command TEXT');
