@@ -26,18 +26,24 @@ function stringToEmojis(string) {
 
 client.on('ready', () => {
 	botLog('Ready!');
-	client.user.setGame('służę pomocą!');
+	client.user.setGame('bot.kuvus.pl');
 	client.user.setAvatar('./avatar3.png');
 });
 
 client.on('message', message => {
-	if(message.author.bot) return;
+    if(message.author.bot) return;
 
     let content = message.content;
     let command = message.content.toLowerCase();
     let nick = message.author.username;
     let channel = message.channel;
-    let server = message.guild.name;
+    var server;
+    if (channel.type == "text") {
+        server = message.guild.name;
+    }
+    else {
+        server = "Private Message";
+    }
     
     switch (command) {
         case '.ping':
@@ -49,6 +55,8 @@ client.on('message', message => {
             message.reply('ping!');
             break;
         case 'hi kuvu!':
+		case 'cześć kuvu!':
+		case '.hi':
             userLog(server, nick, 'command HI_KUVU');
             channel.sendMessage('Hi ' + message.author.username + '!');
             break;
@@ -60,12 +68,14 @@ client.on('message', message => {
         case '.pomoc':
         case '.help':
             userLog(server, nick, 'command HELP');
-            message.author.sendMessage('Oto lista komend:\n```.pomoc - wyświetla pomoc\n.ping - wysyła wiadomość o treści ping\n.avatar - wysyła adres URL do twojego avatara\n.servers - Lista serwerów używających kuvuBota```');
+            message.author.sendMessage('Oto lista komend:\n```.pomoc - wyświetla pomoc\n.ping - wysyła wiadomość o treści ping\n.avatar - wysyła adres URL do twojego avatara\n.avatar @nick - wysyła URL do avatara oznaczonej osoby\n.serwery (.servers) - Lista serwerów używających kuvuBota\n.text <tekst> - przekształca tekst na emoji\n```');
             message.reply('lista komend została wysłana na PW!');
             break;
         case '.servers':
+        case '.serwery':
             userLog(server, nick, 'command SERVERS');
-            message.reply('serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name + ' (#' + r.id + ')') + '```');
+			let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "").replace(/^\s*/g, "") + ' (#' + r.id + ')') + '```';
+            message.reply(serversMessage);
             break;
         default:
             if (command.startsWith('.avatar')) {
