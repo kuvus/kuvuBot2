@@ -11,11 +11,13 @@ function userLog(server, nick, msg) {
 
 function stringToEmojis(string) {
     let result = [];
-    string.split('').forEach(function (c) {
-        if (c.search(/a-z/)) {
-            let aCode = 97; //https://unicode-table.com/en/0061/
+    string.toLowerCase().split('').forEach(function (c) {
+        let code = c.charCodeAt(0);
+        let aCode = 97; //https://unicode-table.com/en/0061/
+        let zCode = 122; //https://unicode-table.com/en/007A/
+        if (code >= aCode && code <= zCode) {
             let regionalIndicatorACode = 127462; //https://unicode-table.com/en/1F1E6/
-            let emojiCode = regionalIndicatorACode + c.charCodeAt(0) - aCode;
+            let emojiCode = regionalIndicatorACode + code - aCode;
             result.push(String.fromCodePoint(emojiCode));
         }
     });
