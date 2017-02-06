@@ -11,11 +11,13 @@ function userLog(server, nick, msg) {
 
 function stringToEmojis(string) {
     let result = [];
-    string.split('').forEach(function (c) {
-        if (c.search(/a-z/)) {
-            let aCode = 97; //https://unicode-table.com/en/0061/
+    string.toLowerCase().split('').forEach(function (c) {
+        let code = c.charCodeAt(0);
+        let aCode = 97; //https://unicode-table.com/en/0061/
+        let zCode = 122; //https://unicode-table.com/en/007A/
+        if (code >= aCode && code <= zCode) {
             let regionalIndicatorACode = 127462; //https://unicode-table.com/en/1F1E6/
-            let emojiCode = regionalIndicatorACode + c.charCodeAt(0) - aCode;
+            let emojiCode = regionalIndicatorACode + code - aCode;
             result.push(String.fromCodePoint(emojiCode));
         }
     });
@@ -24,7 +26,7 @@ function stringToEmojis(string) {
 
 client.on('ready', () => {
 	botLog('Ready!');
-	client.user.setGame('służę pomocą!');
+	client.user.setGame('bot.kuvus.pl');
 	client.user.setAvatar('./avatar3.png');
 });
 
@@ -53,7 +55,8 @@ client.on('message', message => {
             message.reply('ping!');
             break;
         case 'hi kuvu!':
-	case 'cześć kuvu!':
+		case 'cześć kuvu!':
+		case '.hi':
             userLog(server, nick, 'command HI_KUVU');
             channel.sendMessage('Hi ' + message.author.username + '!');
             break;
@@ -93,11 +96,13 @@ client.on('message', message => {
                 if (users.first()) {
                     let result = '';
                     users.forEach(function (user) {
-                        result += user.avatarURL + '\n';
+                        let avatar = user.avatarURL;
+                        result += (avatar == null ? '<brak awatara>' : avatar) + '\n';
                     });
                     message.reply(result);
                 } else {
-                    message.reply(message.author.avatarURL);
+                    let avatar = message.author.avatarURL;
+                    message.reply(avatar == null ? 'nie ustawiłeś jeszcze awatara!' : avatar);
                 }
             } else if (command.startsWith('.text')) {
                 userLog(server, nick, 'command TEXT');

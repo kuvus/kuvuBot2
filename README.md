@@ -1,5 +1,10 @@
 # kuvuBot
 
+### Informations
+Official Web Site: https://bot.kuvus.pl <br>
+Official Discord server: https://discord.gg/J9ubTth <br>
+Add kuvuBot to your server: http://bit.ly/kuvuBotAdd
+
 ### Installation Guide:
 Node.js 6.0.0 or newer is required!
 
