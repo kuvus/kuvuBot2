@@ -65,7 +65,19 @@ client.on('message', message => {
         case '.pomoc':
         case '.help':
             userLog(server, nick, 'command HELP');
-            message.author.sendMessage('Oto lista komend:\n```.pomoc - wyświetla pomoc\n.ping - wysyła wiadomość o treści ping\n.avatar - wysyła adres URL do twojego avatara\n.servers - Lista serwerów używających kuvuBota```');
+            const embed = new discord.RichEmbed()
+                .setTitle('kuvuBot')
+                .setColor('#2196f3')
+                .setFooter('© 2016-2017 kuvuBot Team')
+                .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+                .setURL('https://bot.kuvus.pl')
+                .addField(':information_source:  Komendy', "[.pomoc](javascript:;) - wyświetla pomoc dotyczącą bota\n[.ping](javascript:;) - wysyła \"ping\"\n[.text](javascript:;) <tekst> - generuje tekst w postaci emoji\n[.rawtext](javascript:;) <tekst> - generuje tekst w postaci kodu emoji\n[.avatar](javascript:;) [wzmianka] - wysyła link avatara konkretnego użytkownika\n[.serwery](javascript:;) - wyświetla serwery na których jest kuvuBot\n[.react](javascript:;) <tekst> - bot reaguje tekstem na wiadomość")
+                .addField(':link:  Linki', 'WWW: [bot.kuvus.pl](https://bot.kuvus.pl)\nGitHub: https://github.com/kuvus/kuvuBot\n\n[Dodaj kuvuBota na swój serwer!](https://discordapp.com/oauth2/authorize?&client_id=205965155282976768&scope=bot&permissions=268561430)')
+            message.author.sendEmbed(
+                embed,
+                'Oto podstawowe infomacje o bocie:',
+                { disableEveryone: true }
+            );
             message.reply('lista komend została wysłana na PW!');
             break;
         case '.servers':
