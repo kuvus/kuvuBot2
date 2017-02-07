@@ -75,7 +75,7 @@ client.on('message', message => {
                 .setFooter('© 2016-2017 kuvuBot Team')
                 .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
                 .setURL('https://bot.kuvus.pl')
-                .addField(':information_source:  Komendy', "[.pomoc](javascript:;) - wyświetla pomoc dotyczącą bota\n[.ping](javascript:;) - wysyła \"ping\"\n[.text](javascript:;) <tekst> - generuje tekst w postaci emoji\n[.rawtext](javascript:;) <tekst> - generuje tekst w postaci kodu emoji\n[.avatar](javascript:;) [wzmianka] - wysyła link avatara konkretnego użytkownika\n[.serwery](javascript:;) - wyświetla serwery na których jest kuvuBot\n[.react](javascript:;) <tekst> - bot reaguje tekstem na wiadomość\n[.clever](javascript:;) <tekst> - cleverbot")
+                .addField(':information_source:  Komendy', "[.pomoc](javascript:;) - wyświetla pomoc dotyczącą bota\n[.ping](javascript:;) - wysyła \"ping\"\n[.text](javascript:;) <tekst> - generuje tekst w postaci emoji\n[.rawtext](javascript:;) <tekst> - generuje tekst w postaci kodu emoji\n[.avatar](javascript:;) [wzmianka] - wysyła link avatara konkretnego użytkownika\n[.serwery](javascript:;) - wyświetla serwery na których jest kuvuBot\n[.react](javascript:;) <tekst> - bot reaguje tekstem na wiadomość\n[.clever](javascript:;) <tekst> - cleverbot\n[.randomcat](javascript:;) - losowy kotek :3")
                 .addField(':link:  Linki', 'WWW: [bot.kuvus.pl](https://bot.kuvus.pl)\nGitHub: https://github.com/kuvus/kuvuBot\n\n[Dodaj kuvuBota na swój serwer!](https://discordapp.com/oauth2/authorize?&client_id=205965155282976768&scope=bot&permissions=268561430)')
             	message.author.sendEmbed(
                 embed,
@@ -89,6 +89,24 @@ client.on('message', message => {
             userLog(server, nick, 'command SERVERS');
 			let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "").replace(/^\s*/g, "") + ' (#' + r.id + ')') + '```';
             message.reply(serversMessage);
+            break;
+        case '.randomcat':
+            userLog(server, nick, 'command RANDOMCAT');
+            let options = {
+              host: 'random.cat',
+              port: 80,
+              path: '/meow'
+            };
+            http.get(options).on('response', function (response) {
+                let cat = '';
+                response.on('data', function (chunk) {
+                    cat += chunk;
+                });
+                response.on('end', function () {
+                    let obj = JSON.parse(cat);
+                    message.reply(obj.file);  
+                });
+            });
             break;
         default:
             if (command.startsWith('.avatar')) {
