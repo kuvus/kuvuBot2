@@ -101,11 +101,12 @@ client.on('message', message => {
             message.reply(serversMessage);
             break;
         case '.randomcat':
+        case '.kiciusie':
             userLog(server, nick, 'command RANDOMCAT');
             let options = {
-              host: 'random.cat',
+              host: 'api.kiciusie.pl',
               port: 80,
-              path: '/meow'
+              path: '/index.php?type=get&mode=random'
             };
             http.get(options).on('response', function (response) {
                 let cat = '';
