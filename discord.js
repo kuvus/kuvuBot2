@@ -1,6 +1,7 @@
 const discord = require('discord.js');
 const Cleverbot = require('cleverbot');
 const client = new discord.Client();
+const http = require('http');
 
 function botLog(msg) {
     console.log(`Bot: ${msg}`)
