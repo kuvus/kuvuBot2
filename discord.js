@@ -155,6 +155,19 @@ client.on('message', message => {
                     }
                 }
                 react(0);
+            } else if (command.startsWith('.clever')) {
+                userLog(server, nick, 'command CLEVER');
+                command.replace(".clever ", '');
+
+                let clev = new Cleverbot({
+                    key: '<apiKey>' // from https://www.cleverbot.com/api/
+                });
+                     
+                clev.query(command)
+                .then(function (response) {
+                    channel.sendMessage(response.output); 
+                     
+                });
             }
     }
 });
