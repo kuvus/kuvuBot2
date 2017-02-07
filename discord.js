@@ -166,7 +166,7 @@ client.on('message', message => {
                      
                 clev.query(command)
                 .then(function (response) {
-                    channel.sendMessage(response.output); 
+                    message.reply(response.output); 
                      
                 });
             }
