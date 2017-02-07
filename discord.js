@@ -75,7 +75,7 @@ client.on('message', message => {
                 .setFooter('© 2016-2017 kuvuBot Team')
                 .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
                 .setURL('https://bot.kuvus.pl')
-                .addField(':information_source:  Komendy', "[.pomoc](javascript:;) - wyświetla pomoc dotyczącą bota\n[.ping](javascript:;) - wysyła \"ping\"\n[.text](javascript:;) <tekst> - generuje tekst w postaci emoji\n[.rawtext](javascript:;) <tekst> - generuje tekst w postaci kodu emoji\n[.avatar](javascript:;) [wzmianka] - wysyła link avatara konkretnego użytkownika\n[.serwery](javascript:;) - wyświetla serwery na których jest kuvuBot\n[.react](javascript:;) <tekst> - bot reaguje tekstem na wiadomość")
+                .addField(':information_source:  Komendy', "[.pomoc](javascript:;) - wyświetla pomoc dotyczącą bota\n[.ping](javascript:;) - wysyła \"ping\"\n[.text](javascript:;) <tekst> - generuje tekst w postaci emoji\n[.rawtext](javascript:;) <tekst> - generuje tekst w postaci kodu emoji\n[.avatar](javascript:;) [wzmianka] - wysyła link avatara konkretnego użytkownika\n[.serwery](javascript:;) - wyświetla serwery na których jest kuvuBot\n[.react](javascript:;) <tekst> - bot reaguje tekstem na wiadomość\n[.clever](javascript:;) <tekst> - cleverbot")
                 .addField(':link:  Linki', 'WWW: [bot.kuvus.pl](https://bot.kuvus.pl)\nGitHub: https://github.com/kuvus/kuvuBot\n\n[Dodaj kuvuBota na swój serwer!](https://discordapp.com/oauth2/authorize?&client_id=205965155282976768&scope=bot&permissions=268561430)')
             	message.author.sendEmbed(
                 embed,
