@@ -119,6 +119,25 @@ client.on('message', message => {
                 });
             });
             break;
+        case '.randombolek':
+            userLog(server, nick, 'command RANDOMBOLEK');
+            let options1 = {
+              host: 'api.kuvus.pl',
+              port: 80,
+              path: '/index.php?cat=bolek'
+            };
+
+            http.get(options1).on('response', function (response1) {
+                let bolek = '';
+                response1.on('data', function (chunk1) {
+                    bolek += chunk1;
+                });
+                response1.on('end', function () {
+                    let obj1 = JSON.parse(bolek);
+                    message.reply(obj1.url);  
+                });
+            });
+            break;
         default:
             if (command.startsWith('.avatar')) {
                 userLog(server, nick, 'command AVATAR');
