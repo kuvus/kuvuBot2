@@ -135,13 +135,13 @@ client.on('message', message => {
             };
 
             http.get(options).on('response', function (response) {
-                let cat = '';
+                let cat1 = '';
                 response.on('data', function (chunk) {
                     cat += chunk;
                 });
                 response.on('end', function () {
                     let obj = JSON.parse(cat);
-                    const cat = new discord.RichEmbed()
+                    const cat1 = new discord.RichEmbed()
                         .setTitle('kuvuBot')
                         .setColor('#CC0066')
                         .setDescription('Random cat picture.')
@@ -151,7 +151,7 @@ client.on('message', message => {
                         .setImage(obj.url)
                         .addField('\u200b', '\u200b')
                         message.channel.sendEmbed(
-                        cat,
+                        cat1,
                         '',
                         { disableEveryone: true }
                     );
