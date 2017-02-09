@@ -175,7 +175,7 @@ client.on('message', message => {
                 });
                 response1.on('end', function () {
                     let obj1 = JSON.parse(bolek);
-                    const bolek = new discord.RichEmbed()
+                    const bolek1 = new discord.RichEmbed()
                         .setTitle('kuvuBot')
                         .setColor('#3399FF')
                         .setDescription('Random bolek picture.')
@@ -185,7 +185,7 @@ client.on('message', message => {
                         .setImage(obj1.url)
                         .addField('\u200b', '\u200b')
                         message.channel.sendEmbed(
-                        bolek,
+                        bolek1,
                         '',
                         { disableEveryone: true }
                     );
