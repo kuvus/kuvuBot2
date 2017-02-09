@@ -27,9 +27,9 @@ function stringToEmojis(string) {
 }
 
 client.on('ready', () => {
-	botLog('Ready!');
-	client.user.setGame('bot.kuvus.pl');
-	client.user.setAvatar('./avatar3.png');
+    botLog('Ready!');
+    client.user.setGame('.pomoc');
+    client.user.setAvatar('./avatar3.png');
 });
 
 client.on('message', message => {
@@ -50,15 +50,38 @@ client.on('message', message => {
     switch (command) {
         case '.ping':
             userLog(server, nick, 'command PING');
-            message.reply('pong!');
+            const ping = new discord.RichEmbed()
+                .setTitle('kuvuBot')
+                .setColor('#00FF00')
+                .setFooter('© 2016-2017 kuvuBot Team')
+                .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+                .setURL('https://bot.kuvus.pl')
+                .addField('Pong!', '\u200b')
+                message.channel.sendEmbed(
+                ping,
+                    '',
+                { disableEveryone: true }
+            );
             break;
         case '.pong':
             userLog(server, nick, 'command PONG');
-            message.reply('ping!');
+            const pong = new discord.RichEmbed()
+                .setTitle('kuvuBot')
+                .setColor('#00FF00')
+                .setFooter('© 2016-2017 kuvuBot Team')
+                .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+                .setURL('https://bot.kuvus.pl')
+                .addField('Ping!!', '\u200b')
+                message.channel.sendEmbed(
+                pong,
+                    '',
+                { disableEveryone: true }
+            );
+            break;
             break;
         case 'hi kuvu!':
-		case 'cześć kuvu!':
-		case '.hi':
+        case 'cześć kuvu!':
+        case '.hi':
             userLog(server, nick, 'command HI_KUVU');
             channel.sendMessage('Hi ' + message.author.username + '!');
             break;
@@ -76,7 +99,7 @@ client.on('message', message => {
                 .setFooter('© 2016-2017 kuvuBot Team')
                 .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
                 .setURL('https://bot.kuvus.pl')
-	        .addField('ℹ️  Komendy', "[.pomoc](javascript:;) - wyświetla pomoc dotyczącą bota")
+                .addField('ℹ️  Komendy', "[.pomoc](javascript:;) - wyświetla pomoc dotyczącą bota")
                 .addField('\u200b', '[.ping](javascript:;) - wysyła \"ping\"')
                 .addField('\u200b', '[.text](javascript:;) <tekst> - generuje tekst w postaci emoji')
                 .addField('\u200b', '[.rawtext](javascript:;) <tekst> - generuje tekst w postaci kodu emoji')
@@ -84,10 +107,10 @@ client.on('message', message => {
                 .addField('\u200b', '[.serwery](javascript:;) - wyświetla serwery na których jest kuvuBot')
                 .addField('\u200b', '[.react](javascript:;) <tekst> - bot reaguje tekstem na wiadomość')
                 .addField('\u200b', '[.clever](javascript:;) <tekst> - cleverbot')
-                .addField('\u200b', '[.randomcat](javascript:;) - wysyła zdjęcie kotka :3')
+                .addField('\u200b', '[.cat](javascript:;) - wysyła zdjęcie kotka :3')
                 .addField('\u200b', '\u200b')
                 .addField('🔗  Linki', 'WWW: [bot.kuvus.pl](https://bot.kuvus.pl)\nGitHub: https://github.com/kuvus/kuvuBot\n\n[Dodaj kuvuBota na swój serwer!](https://discordapp.com/oauth2/authorize?&client_id=205965155282976768&scope=bot&permissions=268561430)')
-            	message.author.sendEmbed(
+                message.author.sendEmbed(
                 embed,
                 'Oto podstawowe infomacje o bocie:',
                 { disableEveryone: true }
@@ -97,17 +120,20 @@ client.on('message', message => {
         case '.servers':
         case '.serwery':
             userLog(server, nick, 'command SERVERS');
-			let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "").replace(/^\s*/g, "") + ' (#' + r.id + ')') + '```';
+            let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "").replace(/^\s*/g, "") + ' (#' + r.id + ')' + ', ' + r.owner.displayName + '') + '```';
             message.reply(serversMessage);
             break;
-        case '.randomcat':
+        case '.cat':
         case '.kiciusie':
+        case '.kot':
+        case '.kotek':
             userLog(server, nick, 'command RANDOMCAT');
             let options = {
               host: 'api.kiciusie.pl',
               port: 80,
               path: '/index.php?type=get&mode=random'
             };
+
             http.get(options).on('response', function (response) {
                 let cat = '';
                 response.on('data', function (chunk) {
@@ -115,17 +141,33 @@ client.on('message', message => {
                 });
                 response.on('end', function () {
                     let obj = JSON.parse(cat);
-                    message.reply(obj.file);  
+                    const cat = new discord.RichEmbed()
+                        .setTitle('kuvuBot')
+                        .setColor('#CC0066')
+                        .setDescription('Random cat picture.')
+                        .setFooter('© 2016-2017 kuvuBot Team')
+                        .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+                        .setURL('https://bot.kuvus.pl')
+                        .setImage(obj.url)
+                        .addField('\u200b', '\u200b')
+                        message.channel.sendEmbed(
+                        cat,
+                        '',
+                        { disableEveryone: true }
+                    );
                 });
             });
+
             break;
         case '.randombolek':
+        case '.bolek':
             userLog(server, nick, 'command RANDOMBOLEK');
             let options1 = {
               host: 'api.kuvus.pl',
               port: 80,
               path: '/?t=img&c=bolek'
             };
+
             http.get(options1).on('response', function (response1) {
                 let bolek = '';
                 response1.on('data', function (chunk1) {
@@ -133,7 +175,20 @@ client.on('message', message => {
                 });
                 response1.on('end', function () {
                     let obj1 = JSON.parse(bolek);
-                    message.reply(obj1.url);  
+                    const bolek = new discord.RichEmbed()
+                        .setTitle('kuvuBot')
+                        .setColor('#3399FF')
+                        .setDescription('Random bolek picture.')
+                        .setFooter('© 2016-2017 kuvuBot Team')
+                        .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+                        .setURL('https://bot.kuvus.pl')
+                        .setImage(obj1.url)
+                        .addField('\u200b', '\u200b')
+                        message.channel.sendEmbed(
+                        bolek,
+                        '',
+                        { disableEveryone: true }
+                    );
                 });
             });
             break;
