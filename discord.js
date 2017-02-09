@@ -124,9 +124,8 @@ client.on('message', message => {
             let options1 = {
               host: 'api.kuvus.pl',
               port: 80,
-              path: '/index.php?cat=bolek'
+              path: '/?t=img&c=bolek'
             };
-
             http.get(options1).on('response', function (response1) {
                 let bolek = '';
                 response1.on('data', function (chunk1) {
