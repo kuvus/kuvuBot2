@@ -192,6 +192,34 @@ client.on('message', message => {
                 });
             });
             break;
+        case '.mojang':
+            userLog(server, nick, 'command MOJANG');
+            let options2 = {
+              host: 'api.kuvus.pl',
+              port: 80,
+              path: '/?t=status&s=mojang'
+            };
+            http.get(options2).on('response', function (response2) {
+                let mjg = '';
+                response2.on('data', function (chunk2) {
+                    mjg += chunk2;
+                });
+                response2.on('end', function () {
+		            const mjg1 = new discord.RichEmbed()
+		                .setTitle('kuvuBot')
+		                .setColor('#2196f3')
+		                .setFooter('© 2016-2017 kuvuBot Team')
+		                .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+		                .setURL('https://bot.kuvus.pl')
+		                .addField('Oto status serwerów Mojang: \n', mjg)
+		                message.channel.sendEmbed(
+		                mjg1,
+		                '',
+		                { disableEveryone: true }
+		            );
+                });
+            });
+            break;
         default:
             if (command.startsWith('.avatar')) {
                 userLog(server, nick, 'command AVATAR');
