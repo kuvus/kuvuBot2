@@ -8,10 +8,10 @@ Add kuvuBot to your server: http://bit.ly/kuvuBotAdd
 ### Installation Guide:
 Node.js 6.0.0 or newer is required!
 
-Once you have node installed running npm install from the bot directory should install all the needed packages. If this command prints errors the bot won't work!
+To install all modules just run `npm install --save` command in bot directory.
 
 ### Running Guide:
-`node discord.js`
+`node kuvuBot.js`
 
 ### Creating Discord Bot Account Guide:
 
