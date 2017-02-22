@@ -192,34 +192,6 @@ client.on('message', message => {
                 });
             });
             break;
-        case '.mojang':
-            userLog(server, nick, 'command MOJANG');
-            let options2 = {
-              host: 'api.kuvus.pl',
-              port: 80,
-              path: '/?t=status&s=mojang'
-            };
-            http.get(options2).on('response', function (response2) {
-                let mjg = '';
-                response2.on('data', function (chunk2) {
-                    mjg += chunk2;
-                });
-                response2.on('end', function () {
-		            const mjg1 = new discord.RichEmbed()
-		                .setTitle('kuvuBot')
-		                .setColor('#2196f3')
-		                .setFooter('© 2016-2017 kuvuBot Team')
-		                .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
-		                .setURL('https://bot.kuvus.pl')
-		                .addField('Oto status serwerów Mojang: \n', mjg)
-		                message.channel.sendEmbed(
-		                mjg1,
-		                '',
-		                { disableEveryone: true }
-		            );
-                });
-            });
-            break;
         default:
             if (command.startsWith('.avatar')) {
                 userLog(server, nick, 'command AVATAR');
@@ -300,6 +272,111 @@ client.on('message', message => {
                      
                 });
             }
+			else if (command.startsWith('.status')) { 
+			  	let args = message.content.split(" ").slice(1);
+				let status = args[0];
+				let srv = args[1];
+				if (status != undefined) {
+					var status1 = status.toLowerCase();
+				}
+				if (status1 == 'mojang') {
+		            userLog(server, nick, 'command MOJANG');
+		            let options2 = {
+		              host: 'api.kuvus.pl',
+		              port: 80,
+		              path: '/?t=status&s=mojang'
+		            };
+
+		            http.get(options2).on('response', function (response2) {
+		                let mjg = '';
+		                response2.on('data', function (chunk2) {
+		                    mjg += chunk2;
+		                });
+		                response2.on('end', function () {
+				            const mjg1 = new discord.RichEmbed()
+				                .setTitle('kuvuBot')
+				                .setColor('#2196f3')
+				                .setFooter('© 2016-2017 kuvuBot Team')
+				                .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+				                .setURL('https://bot.kuvus.pl')
+				                .addField('Oto status serwerów Mojang: \n', mjg)
+				                message.channel.sendEmbed(
+				                mjg1,
+				                '',
+				                { disableEveryone: true }
+				            );
+		                });
+		            });
+				}
+				else if (status1 == 'mc') {
+					if (srv != undefined) {
+						userLog(server, nick, 'command MC');
+    		            let options3 = {
+    		              host: 'api.kuvus.pl',
+    		              port: 80,
+    		              path: '/srv.php?s=' + srv
+    		            };
+
+    		            http.get(options3).on('response', function (response3) {
+    		                let srv1 = '';
+    		                response3.on('data', function (chunk3) {
+    		                    srv1 += chunk3;
+    		                });
+    		                response3.on('end', function () {
+                                let obj3 = JSON.parse(srv1);
+                                if (obj3.online == true) {
+                                    var stat = ':green_heart: Włączony';
+                                }
+                                else {
+                                    var stat = ':heart: Wyłączony';
+                                }
+                                if (obj3.online != false) {
+        				            const srv2 = new discord.RichEmbed()
+        				                .setTitle('kuvuBot')
+        				                .setColor('#2196f3')
+        				                .setFooter('© 2016-2017 kuvuBot Team, status powered by api.skript.pl')
+        				                .setURL('https://bot.kuvus.pl')
+        				                .addField('Oto status serwera:', obj3.address)
+                                        .addField('➭ IP: ', obj3.address)
+                                        .addField('➭ Online: ', stat)
+                                        .addField('➭ Ping: ', obj3.latency)
+                                        .addField('➭ Gracze: ', obj3.players.online + '/' + obj3.players.max)
+                                        .addField('➭ Wersja: ', obj3.version.name)
+                                        .addField('➭ Opis: ', obj3.description)
+        				                message.channel.sendEmbed(
+        				                srv2,
+        				                '',
+        				                { disableEveryone: true }
+        				            );
+                                }
+                                else {
+                                    const srv2 = new discord.RichEmbed()
+                                        .setTitle('kuvuBot')
+                                        .setColor('#CC0033')
+                                        .setFooter('© 2016-2017 kuvuBot Team, status powered by api.skript.pl')
+                                        .setURL('https://bot.kuvus.pl')
+                                        .addField('Oto status serwera:', obj3.address)
+                                        .addField('➭ IP: ', obj3.address)
+                                        .addField('➭ Online: ', stat)
+                                        message.channel.sendEmbed(
+                                        srv2,
+                                        '',
+                                        { disableEveryone: true }
+                                    );
+                                }
+    		                });
+    		            });
+					}
+					else {
+                        message.reply('poprawne użycie: `.status mc <IP serwera>`')
+
+					}
+				}
+				else if (status !== 'mojang' || status1 !== 'mc') {
+					message.reply('poprawne użycie: `.status <mojang/mc>`');
+				}
+
+			}
     }
 });
 
