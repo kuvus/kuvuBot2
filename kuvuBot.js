@@ -1,5 +1,6 @@
 const discord = require('discord.js');
 const Cleverbot = require('cleverbot');
+const config = require('./config.js');
 const client = new discord.Client();
 const http = require('http');
 
@@ -263,7 +264,7 @@ client.on('message', message => {
                 command.replace(".clever ", '');
 
                 let clev = new Cleverbot({
-                    key: '<CLEVER_API_KEY>'
+                    key: config.apikeys.cleverbot_api_key
                 });
                      
                 clev.query(command)
@@ -379,4 +380,4 @@ client.on('message', message => {
     }
 });
 
-client.login('<TOKEN>');
+client.login(config.apikeys.discord_token);
