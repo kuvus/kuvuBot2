@@ -261,13 +261,13 @@ client.on('message', message => {
                 react(0);
             } else if (command.startsWith('.clever')) {
                 userLog(server, nick, 'command CLEVER');
-                command.replace(".clever ", '');
+                let commandC = command.replace(".clever ", '');
 
                 let clev = new Cleverbot({
                     key: config.apikeys.cleverbot_api_key
                 });
                      
-                clev.query(command)
+                clev.query(commandC)
                 .then(function (response) {
                     message.reply(response.output); 
                      
