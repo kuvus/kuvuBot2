@@ -125,41 +125,6 @@ client.on('message', message => {
             let serversMessage = 'serwery, które używają kuvuBota: \n' + '```' + client.guilds.map(r => '\n' + r.name.replace(/["`"]/g, "").replace(/^\s*/g, "") + ' (#' + r.id + ')' + ', ' + r.owner.displayName + '') + '```';
             message.reply(serversMessage);
             break;
-        case '.cat':
-        case '.kiciusie':
-        case '.kot':
-        case '.kotek':
-            userLog(server, nick, 'command RANDOMCAT');
-            let options = {
-              host: 'api.kiciusie.pl',
-              port: 80,
-              path: '/index.php?type=get&mode=random'
-            };
-
-            http.get(options).on('response', function (response) {
-                let cat = '';
-                response.on('data', function (chunk) {
-                    cat += chunk;
-                });
-                response.on('end', function () {
-                    let obj = JSON.parse(cat);
-                    const cat1 = new discord.RichEmbed()
-                        .setTitle('kuvuBot')
-                        .setColor('#CC0066')
-                        .setDescription('Random cat picture.')
-                        .setFooter('© 2016-2017 kuvuBot Team')
-                        .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
-                        .setURL('https://bot.kuvus.pl')
-                        .setImage(obj.url)
-                        .addField('\u200b', '\u200b')
-                        message.channel.sendEmbed(
-                        cat1,
-                        '',
-                        { disableEveryone: true }
-                    );
-                });
-            });
-            break;
         case '.randombolek':
         case '.bolek':
             userLog(server, nick, 'command RANDOMBOLEK');
@@ -374,6 +339,80 @@ client.on('message', message => {
                 }
                 else if (status !== 'mojang' || status1 !== 'mc') {
                     message.reply('poprawne użycie: `.status <mojang/mc>`');
+                }
+
+            }
+            else if (command.startsWith('.cat' || ".kot" || ".kiciusie" || ".kotek")) { 
+                let args = message.content.split(" ").slice(1);
+                let category = args[0];
+                if (category != undefined) {
+                    var category1 = category.toLowerCase();
+                }
+                if (category == 'gif') {
+                    userLog(server, nick, 'command CAT_GIF');
+					let options4 = {
+						host: 'api.kiciusie.pl',
+						port: 80,
+						path: '/index.php?type=get&mode=gif'
+					};
+
+                    http.get(options4).on('response', function (response4) {
+                        let cgif = '';
+                        response4.on('data', function (chunk4) {
+                            cgif += chunk4;
+                        });
+                        response4.on('end', function () {
+	                    	let objC1 = JSON.parse(cgif);
+		                    const catG = new discord.RichEmbed()
+		                        .setTitle('kuvuBot')
+		                        .setColor('#CC0066')
+		                        .setDescription('Random cat picture.')
+		                        .setFooter('© 2016-2017 kuvuBot Team')
+		                        .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+		                        .setURL('https://bot.kuvus.pl')
+		                        .setImage(objC1.url)
+		                        .addField('\u200b', '\u200b')
+		                        message.channel.sendEmbed(
+		                        catG,
+		                        '',
+		                        { disableEveryone: true }
+		                    );
+                        });
+                    });
+                } else if (category1 == 'img') {
+                    userLog(server, nick, 'command CAT_IMG');
+					let options5 = {
+						host: 'api.kiciusie.pl',
+						port: 80,
+						path: '/index.php?type=get&mode=image'
+					};
+
+                    http.get(options5).on('response', function (response5) {
+                        let cimg = '';
+                        response5.on('data', function (chunk5) {
+                            cimg += chunk5;
+                        });
+                        response5.on('end', function () {
+	                    	let objC2 = JSON.parse(cimg);
+		                    const catI = new discord.RichEmbed()
+		                        .setTitle('kuvuBot')
+		                        .setColor('#CC0066')
+		                        .setDescription('Random cat picture.')
+		                        .setFooter('© 2016-2017 kuvuBot Team')
+		                        .setThumbnail('https://cdn.discordapp.com/app-icons/205965155282976768/ea38f145269800017987c7252fd2b21a.png')
+		                        .setURL('https://bot.kuvus.pl')
+		                        .setImage(objC2.url)
+		                        .addField('\u200b', '\u200b')
+		                        message.channel.sendEmbed(
+		                        catI,
+		                        '',
+		                        { disableEveryone: true }
+		                    );
+                        });
+                    });
+                }
+                else if (category1 !== 'gif' || category1 !== 'img') {
+                    message.reply('poprawne użycie: `.kot (.cat, .kotek, .kiciusie) <gif/img>`');
                 }
 
             }
